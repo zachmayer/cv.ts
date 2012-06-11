@@ -1,5 +1,5 @@
 #Fix progress bar when using parallel backend?
-#Add Garch, bats, tbats, neural network, fourrier, and farima functions
+#Add Garch, bats, tbats, fourrier, wavelets, and farima functions
 #Fix RMSE calculation over all horizons
 #Create tuning grids for forecast functions
 #Add BoxCox.lambda method to tsControl
@@ -17,8 +17,10 @@
 #	6. Each step best model prediction data frame
 #	7. Actuals data frame
 
-#Setup
+#Load Packages
 stopifnot(require(compiler))
+
+#Test if an object exists
 testObject <- function(object){ 
   exists(as.character(substitute(object)))
 }
@@ -114,7 +116,8 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
 	}
   
 	#At each point in time, calculate 'maxHorizon' forecasts ahead
-	forcasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE, .packages=c('forecast')) %dopar% {
+	forcasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE,
+                  .packages=c('forecast'), .export=c('testObject', 'tsSummary', 'tseriesControl')) %dopar% {
     
 		if (is.null(xreg)) {
 			if (fixedWindow) {

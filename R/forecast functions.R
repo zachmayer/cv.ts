@@ -51,6 +51,7 @@ stl.Forecast <- cmpfun(function(x, h, method='ets', ...) {
 })
 
 arimaForecast <- cmpfun(function(x,h,xreg=NULL,newxreg=NULL,...) {
+  require(forecast)
   fit <- Arima(x, xreg=xreg, ...)
   forecast(fit, h=h, level=99, xreg=newxreg)$mean
 })
