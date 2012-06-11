@@ -67,10 +67,6 @@ etsForecast <- cmpfun(function(x,h,...) {
   forecast(fit, h=h, level=99)$mean
 })
 
-tsSummary <- cmpfun(function(P,A) {
-  data.frame(t(accuracy(P,A)))
-})
-
 caretForecast <- cmpfun(function(x, h, xreg, newxreg=NULL, train.fraction=2/3,...) {
   require(caret)
   stopifnot(h==1)

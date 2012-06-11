@@ -2,17 +2,17 @@
 #Setup
 rm(list = ls(all = TRUE))
 library(testthat)
-setwd('~/Dropbox/Projects/R_Packages/ts.cv/')
+library(fpp)
+library(doParallel)
 source('cv.ts.R')
+source('forecast functions.R')
+setwd('/..')
 
 #Run Tests sequentially
-library(fpp)
 test_dir('tests', reporter = 'Summary')
 
 #Run Tests in parallel
-library(fpp)
-library(doSMP)
-w <- startWorkers(3)
-registerDoSMP(w)
+cl <- makeCluster(4, type='SOCK')
+registerDoParallel(cl)
 test_dir('tests', reporter = 'Summary')
-stopWorkers(w)
+stopCluster(cl)

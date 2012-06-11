@@ -1,15 +1,7 @@
-#ADD a chart of error over time
-#Add an (optional) progress bar
-#Add xregs
-#Parameterize all functions
-#Add ARIMA, ARMA, SARIMA, SARMA, Garch functions
-#Add auto.arima and ets functions
-#Come up with a good way to create tuning grids for the above
-#Add pre-processing step: BoxCox using Hyndmans function-- stablize variance?
+#Add ARMA, SARIMA, SARMA, Garch functions
+#Create tuning grids for forecast functions
 
-#cv.ts: Return an object with:
-#	1. Cross validated stats at each horizon+overall average
-#	2. Predicted/Actual dataframes
+#Make a timeseriesControl() function to create default options
 
 #best.ts: Return an object (for the best tune) with:
 #	1. Data frame of parameters+error metric at selected horizon
@@ -22,10 +14,16 @@
 #	6. Each step best model prediction data frame
 #	7. Actuals data frame
 
+#Setup
 stopifnot(require(compiler))
 testObject <- function(object){ 
   exists(as.character(substitute(object)))
 }
+
+#Default summary function
+tsSummary <- cmpfun(function(P,A) {
+  data.frame(t(accuracy(P,A)))
+})
 
 #Function to cross-validate a time series.
 cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
