@@ -1,6 +1,8 @@
 #Fix progress bar when using parallel backend?
-#Add ARMA, SARIMA, SARMA, Garch functions
+#Add Garch, bats, tbats, neural network, fourrier, and farima functions
+#Fix RMSE calculation over all horizons
 #Create tuning grids for forecast functions
+#Add BoxCox.lambda method to tsControl
 
 #Make a timeseriesControl() function to create default options
 
@@ -113,7 +115,7 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
         if (testObject(lambda)) {
           stop("Don't specify a lambda parameter when preProcess==TRUE")
         }
-        stepLambda <- BoxCox.lambda(xshort, method='loglik')
+        stepLambda <- BoxCox.lambda(xshort, method='guerrero')
         xshort <- BoxCox(xshort, stepLambda)
       }
 
@@ -139,7 +141,7 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
         if (testObject(lambda)) {
           stop("Don't specify a lambda parameter when preProcess==TRUE")
         }
-        stepLambda <- BoxCox.lambda(xshort, method='loglik')
+        stepLambda <- BoxCox.lambda(xshort, method='guerrero')
         xshort <- BoxCox(xshort, stepLambda)
       }
       
