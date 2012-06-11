@@ -74,3 +74,11 @@ caretForecast <- cmpfun(function(x, h, xreg, newxreg=NULL, train.fraction=2/3,..
   fit <- train(x~., data=myData, ...)
   predict(fit, newdata=newxreg)
 })
+
+#Define time-series cv indexes for caretForecast
+createTSfolds <- function(y, Min = max(2/3*length(y), 3), k = NA){
+  out = plyr:::llply(Min:(length(y) - 1), seq)
+  if (!is.na(k)) {out = out[seq(1, length(out), k)]}
+  names(out) <- paste("Fold", gsub(" ", "0", format(seq(along = out))), sep = "")
+  return(out)
+}

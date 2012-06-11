@@ -1,3 +1,7 @@
+#Fix progress bar to go to 100%, no 99% for fixed window
+#Fix progress bar to go to 100%, no 98% for growing window with xreg
+#Fix progress bar to go to 100%, no 7% for growing window
+#Fix progress bar to show up when a backend is registered (RStudio only bug?)
 #Add ARMA, SARIMA, SARMA, Garch functions
 #Create tuning grids for forecast functions
 
@@ -41,7 +45,7 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
 	minObs <- tsControl$minObs
 	fixedWindow <- tsControl$fixedWindow
 	summaryFunc <- tsControl$summaryFunc
-    preProcess <- tsControl$preProcess
+  preProcess <- tsControl$preProcess
 	
 	#Make sure xreg object is long enough for last set of forecasts
 	if (! is.null(xreg)) {
@@ -150,8 +154,7 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
 
       return(out)
 		}
-
-    
+ 
 	}
 	
 	#Extract the actuals we actually want to use

@@ -6,7 +6,7 @@
 
 #1-step linear model
 test_that("1-step LM", {
-
+  
 	#Define Answer
 	Hynd <- c(0.779154492257176)
 
@@ -18,7 +18,7 @@ test_that("1-step LM", {
             preProcess=FALSE,
 						summaryFunc=tsSummary
 					)
-	result <- cv.ts(a10, lmForecast, myControl, lambda=0)[1,'MAE']
+	result <- cv.ts(a10, lmForecast, myControl, lambda=0)[['results']][1,'MAE']
 
 	expect_that(result, equals(Hynd))
 }
