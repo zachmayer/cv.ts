@@ -11,13 +11,15 @@ test_that("1-step LM", {
 	Hynd <- c(0.779154492257176)
 
 	#Cross-validate model
-	myControl <- list(	minObs=60,
+	myControl <- tseriesControl(
+            minObs=60,
 						stepSize=1, 
 						maxHorizon=1, 
 						fixedWindow=FALSE,
             preProcess=FALSE,
 						summaryFunc=tsSummary
 					)
+  
 	result <- cv.ts(a10, lmForecast, myControl, lambda=0)[['results']][1,'MAE']
 
 	expect_that(result, equals(Hynd))

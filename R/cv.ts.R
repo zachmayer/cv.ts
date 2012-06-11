@@ -28,8 +28,20 @@ tsSummary <- cmpfun(function(P,A) {
   data.frame(t(accuracy(P,A)))
 })
 
+#Default Cross-validation control
+tseriesControl <- function(stepSize=1, maxHorizon=1, minObs=12, fixedWindow=TRUE,
+                              summaryFunc=tsSummary, preProcess=FALSE, ppMethod='guerrero'){
+  list(stepSize=stepSize, 
+       maxHorizon=maxHorizon, 
+       minObs=minObs, 
+       fixedWindow=fixedWindow, 
+       summaryFunc=summaryFunc, 
+       preProcess=preProcess, 
+       ppMethod=ppMethod)
+}
+
 #Function to cross-validate a time series.
-cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
+cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, ...) {
 	
 	#Load required packages
 	stopifnot(is.ts(x))
@@ -44,7 +56,8 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
 	minObs <- tsControl$minObs
 	fixedWindow <- tsControl$fixedWindow
 	summaryFunc <- tsControl$summaryFunc
-  preProcess <- tsControl$preProcess
+	preProcess <- tsControl$preProcess
+	ppMethod <- tsControl$ppMethod
 	
 	#Make sure xreg object is long enough for last set of forecasts
 	if (! is.null(xreg)) {
@@ -115,7 +128,7 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
         if (testObject(lambda)) {
           stop("Don't specify a lambda parameter when preProcess==TRUE")
         }
-        stepLambda <- BoxCox.lambda(xshort, method='guerrero')
+        stepLambda <- BoxCox.lambda(xshort, method=ppMethod)
         xshort <- BoxCox(xshort, stepLambda)
       }
 
@@ -141,7 +154,7 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
         if (testObject(lambda)) {
           stop("Don't specify a lambda parameter when preProcess==TRUE")
         }
-        stepLambda <- BoxCox.lambda(xshort, method='guerrero')
+        stepLambda <- BoxCox.lambda(xshort, method=ppMethod)
         xshort <- BoxCox(xshort, stepLambda)
       }
       
