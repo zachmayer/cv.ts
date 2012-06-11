@@ -1,7 +1,4 @@
-#Fix progress bar to go to 100%, no 99% for fixed window
-#Fix progress bar to go to 100%, no 98% for growing window with xreg
-#Fix progress bar to go to 100%, no 7% for growing window
-#Fix progress bar to show up when a backend is registered (RStudio only bug?)
+#Fix progress bar when using parallel backend?
 #Add ARMA, SARIMA, SARMA, Garch functions
 #Create tuning grids for forecast functions
 
@@ -87,21 +84,22 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
 	#Set progressbar
 	combine <- rbind
 	if (progress) {
-	  f <- cmpfun(function(){
+	  f <- function(){
 	    pb <- txtProgressBar(1,length(steps)-1,style=3)
 	    count <- 0
 	    function(...) {
 	      count <<- count + length(list(...)) - 1
 	      setTxtProgressBar(pb,count)
+	      Sys.sleep(0.01)
 	      flush.console()
 	      rbind(...)
 	    }
-	  })
+	  }
 	  combine <- f()
 	}
   
 	#At each point in time, calculate 'maxHorizon' forecasts ahead
-	forcasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE) %dopar% {
+	forcasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE, .packages=c('forecast')) %dopar% {
     
 		if (is.null(xreg)) {
 			if (fixedWindow) {

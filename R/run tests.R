@@ -1,6 +1,7 @@
 
 #Setup
 rm(list = ls(all = TRUE))
+#setwd('C:/Users/zmayer/Documents/GitHub/cv.ts/R')
 require(testthat)
 require(forecast)
 require(doParallel)
