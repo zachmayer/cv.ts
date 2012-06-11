@@ -56,4 +56,3 @@ test_that("CV 12, Growing-Window ETS", {
 	expect_that(result, equals(Hynd))
 }
 )
-

@@ -79,27 +79,27 @@ cv.ts <- function(x, FUN, tsControl, xreg=NULL, progress=TRUE, ...) {
 	
 	actuals <- formatActuals(x,maxHorizon)
 	actuals <- actuals[minObs:(length(x)-1),,drop=FALSE]
-
-	#Set progressbar
-	combine <- rbind
-	if (progress) {
-	    f <- cmpfun(function(){
-	        pb <- txtProgressBar(1,n-minObs,style=3)
-	        count <- 0
-	        function(...) {
-	            count <<- count + length(list(...)) - 1
-	            setTxtProgressBar(pb,count)
-	            flush.console()
-	            rbind(...)
-	        }
-	    })
-	    combine <- f()
-	}
     
 	#Create a list of training windows
 	#Each entry of this list will be the same length, if fixed=TRUE
 	steps <- seq(1,(n-minObs),by=stepSize)
-    
+	
+	#Set progressbar
+	combine <- rbind
+	if (progress) {
+	  f <- cmpfun(function(){
+	    pb <- txtProgressBar(1,length(steps)-1,style=3)
+	    count <- 0
+	    function(...) {
+	      count <<- count + length(list(...)) - 1
+	      setTxtProgressBar(pb,count)
+	      flush.console()
+	      rbind(...)
+	    }
+	  })
+	  combine <- f()
+	}
+  
 	#At each point in time, calculate 'maxHorizon' forecasts ahead
 	forcasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE) %dopar% {
     
