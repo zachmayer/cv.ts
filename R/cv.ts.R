@@ -208,25 +208,28 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
 arimaForecast2 <- function(x,h,params,...) {
 	require(forecast)
 	order=c(params$p,params$d,params$q)
-	seasonal=list(order=c(params$p,params$d,params$q), period=frequency(x))
 	Drift=params$Drift
-	fit <- Arima(x, order=order, seasonal=seasonal, include.drift=Drift, ...)
+	fit <- Arima(x, order=order, include.drift=Drift, ...)
 	forecast(fit, h=h, level=99)$mean
 }
 
-best.ts <-  function(x, FUN, atHorizon, metric, tuneGrid, tsControl, ...) {
+best.ts <-  function(x, FUN, atHorizon, metric, tuneGrid, tsControl=tseriesControl(), ...) {
 	out <- tuneGrid
 	out[,metric] <- NA
 	
 	for (row in 1:nrow(tuneGrid)) {
 		params <- tuneGrid[row,]
 		tryCatch({
-			result <- cv.ts(x, FUN, tsControl, params, ...)
-			out[row,metric] <- result[atHorizon, metric]
+			result <- cv.ts(x, FUN, tsControl, params=params, ...)
+			out[row,metric] <- result$results[atHorizon, metric]
 		}, error = function(e) NA)
-		print(out)
-		return(out)
 	}
-	
 	out
 }
+
+model <- best.ts(a10, arimaForecast2, 
+                 atHorizon=1, 
+                 metric='MAPE', 
+                 tuneGrid=expand.grid(p=0:5, d=0:1, q=0:5, Drift=FALSE))
+model
+
