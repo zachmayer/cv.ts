@@ -70,7 +70,6 @@ etsForecast <- cmpfun(function(x,h,...) {
 
 caretForecast <- cmpfun(function(x, h, xreg, newxreg=NULL,...) {
   require(caret)
-  stopifnot(h==1)
   myData <- data.frame(x=as.numeric(x), xreg)
   fit <- train(x~., data=myData, ...)
   predict(fit, newdata=newxreg)
