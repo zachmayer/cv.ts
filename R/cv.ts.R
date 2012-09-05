@@ -114,7 +114,7 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
 	}
   
 	#At each point in time, calculate 'maxHorizon' forecasts ahead
-	forcasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE,
+	forecasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE,
                   .packages=c('forecast'), .export=c('testObject', 'tsSummary', 'tseriesControl')) %dopar% {
     
 		if (is.null(xreg)) {
@@ -178,7 +178,7 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
 	out <- data.frame(
 					ldply(1:maxHorizon, 
 						function(horizon) {
-							P <- forcasts[,horizon,drop=FALSE]
+							P <- forecasts[,horizon,drop=FALSE]
 							A <- na.omit(actuals[,horizon,drop=FALSE])
 							P <- P[1:length(A)]
 							P <- na.omit(P)
@@ -194,7 +194,7 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
   results <- data.frame(horizon=c(1:maxHorizon,'All'),out)
 	
 	#Add a column for which horizon and output
-	return(list(actuals=actuals, forcasts=forcasts, results=results))
+	return(list(actuals=actuals, forecasts=forecasts, results=results))
 }
 
 
