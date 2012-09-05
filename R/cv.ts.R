@@ -4,8 +4,6 @@
 #Create tuning grids for forecast functions
 #Add BoxCox.lambda method to tsControl
 
-#Make a timeseriesControl() function to create default options
-
 #best.ts: Return an object (for the best tune) with:
 #	1. Data frame of parameters+error metric at selected horizon
 #	2. Cross validated stats at each horizon+overall average for final model
@@ -205,31 +203,33 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
 #Functions for testing
 ###########################
 
-arimaForecast2 <- function(x,h,params,...) {
-	require(forecast)
-	order=c(params$p,params$d,params$q)
-	Drift=params$Drift
-	fit <- Arima(x, order=order, include.drift=Drift, ...)
-	forecast(fit, h=h, level=99)$mean
+if (FALSE){
+  arimaForecast2 <- function(x,h,params,...) {
+    require(forecast)
+    order=c(params$p,params$d,params$q)
+    Drift=params$Drift
+    fit <- Arima(x, order=order, include.drift=Drift, ...)
+    forecast(fit, h=h, level=99)$mean
+  }
+  
+  best.ts <-  function(x, FUN, atHorizon, metric, tuneGrid, tsControl=tseriesControl(), ...) {
+    out <- tuneGrid
+    out[,metric] <- NA
+    
+    for (row in 1:nrow(tuneGrid)) {
+      params <- tuneGrid[row,]
+      tryCatch({
+        result <- cv.ts(x, FUN, tsControl, params=params, ...)
+        out[row,metric] <- result$results[atHorizon, metric]
+      }, error = function(e) NA)
+    }
+    out
+  }
+  
+  #model <- best.ts(a10, arimaForecast2, 
+  #                 atHorizon=1, 
+  #                 metric='MAPE', 
+  #                 tuneGrid=expand.grid(p=0:5, d=0:1, q=0:5, Drift=FALSE))
+  #model
 }
-
-best.ts <-  function(x, FUN, atHorizon, metric, tuneGrid, tsControl=tseriesControl(), ...) {
-	out <- tuneGrid
-	out[,metric] <- NA
-	
-	for (row in 1:nrow(tuneGrid)) {
-		params <- tuneGrid[row,]
-		tryCatch({
-			result <- cv.ts(x, FUN, tsControl, params=params, ...)
-			out[row,metric] <- result$results[atHorizon, metric]
-		}, error = function(e) NA)
-	}
-	out
-}
-
-model <- best.ts(a10, arimaForecast2, 
-                 atHorizon=1, 
-                 metric='MAPE', 
-                 tuneGrid=expand.grid(p=0:5, d=0:1, q=0:5, Drift=FALSE))
-model
 
