@@ -24,9 +24,9 @@ testObject <- function(object){
 }
 
 #Default summary function
-tsSummary <- cmpfun(function(P,A) {
-  data.frame(t(accuracy(P,A)))
-})
+tsSummary <- function(P,A) {
+data.frame((as.data.frame(accuracy(P,A))))
+}
 
 #Default Cross-validation control
 tseriesControl <- function(stepSize=1, maxHorizon=1, minObs=12, fixedWindow=TRUE,
