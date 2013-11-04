@@ -80,6 +80,12 @@ tbatsForecast <- cmpfun(function(x,h,...) {
   forecast(fit, h=h, level=99)$mean
 })
 
+nnetarForecast <- cmpfun(function(x,h,...) {
+  require('forecast')
+  fit <- nnetar(x, ...)
+  forecast(fit, h=h, level=99)$mean
+})
+
 caretForecast <- cmpfun(function(x, h, xreg, newxreg=NULL,...) {
   require(caret)
   myData <- data.frame(x=as.numeric(x), xreg)
