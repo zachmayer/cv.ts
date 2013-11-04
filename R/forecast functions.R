@@ -68,6 +68,18 @@ etsForecast <- cmpfun(function(x,h,...) {
   forecast(fit, h=h, level=99)$mean
 })
 
+batsForecast <- cmpfun(function(x,h,...) {
+  require('forecast')
+  fit <- bats(x, ...)
+  forecast(fit, h=h, level=99)$mean
+})
+
+tbatsForecast <- cmpfun(function(x,h,...) {
+  require('forecast')
+  fit <- tbats(x, ...)
+  forecast(fit, h=h, level=99)$mean
+})
+
 caretForecast <- cmpfun(function(x, h, xreg, newxreg=NULL,...) {
   require(caret)
   myData <- data.frame(x=as.numeric(x), xreg)
