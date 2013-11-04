@@ -9,6 +9,11 @@ naiveForecast <- cmpfun(function(x,h,...) {
   naive(x, h, ..., level=99)$mean
 })
 
+snaiveForecast <- cmpfun(function(x,h,...) {
+  require(forecast)
+  snaive(x, h, ..., level=99)$mean
+})
+
 rwForecast <- cmpfun(function(x,h,...) {
   require(forecast)
   rwf(x, h, ..., level=99)$mean
