@@ -1,9 +1,16 @@
 Package: cv.ts
 Type: Package
 Title: Cross-validation of time series models
-Version: 0.01
-Date: 2011-11-28
+Version: 0.02
+Date: 2014-09-09
 Author: Zach Mayer
 Maintainer: Zach Mayer <zach.mayer@gmail.com>
 Description: Functions to cross-validate time-series models
+Depends:
+    R (>= 3.0.0),
+    forecast,
+    caret,
+    foreach
+Imports:
+    plyr
 License: MIT
