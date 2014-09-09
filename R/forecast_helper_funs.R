@@ -95,7 +95,7 @@ batsForecast <- function(x,h,...) {
 #' TBATS forecast wrapper
 #' @export
 tbatsForecast <- function(x,h,...) {
-  forecast:::fit <- tbats(x, ...)
+  fit <- forecast:::tbats(x, ...)
   forecast:::forecast(fit, h=h, level=99)$mean
 }
 
