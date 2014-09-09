@@ -1,9 +1,9 @@
-Package: anRpackage
+Package: cv.ts
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
+Title: Cross-validation of time series models
+Version: 0.01
 Date: 2011-11-28
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Zach Mayer
+Maintainer: zach.mayer@gmail.com
+Description: Functions to cross-validate time-series models
+License: MIT
