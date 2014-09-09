@@ -4,6 +4,6 @@ Title: Cross-validation of time series models
 Version: 0.01
 Date: 2011-11-28
 Author: Zach Mayer
-Maintainer: zach.mayer@gmail.com
+Maintainer: Zach Mayer <zach.mayer@gmail.com>
 Description: Functions to cross-validate time-series models
 License: MIT
