@@ -1,7 +1,7 @@
 Time Series Cross-Valiation
 ===
 
-This is a package to automate the cross-validation of time-series model, particularly those created by the forecast and caret packages.
+This is a package to automate the cross-validation of time-series models, particularly those created by the forecast and caret packages.
 
 Install as follows:
 devtools::install.github('zachmayer/cv.ts')
