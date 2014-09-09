@@ -166,3 +166,4 @@ pip-log.txt
 
 # R crap
 .Rhistory
+.Rproj.user
