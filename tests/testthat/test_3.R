@@ -24,7 +24,7 @@ test_that("CV 12, Growing-Window ARIMA", {
 		seasonal=list(order=c(0,1,1), period=12),
 		include.drift=TRUE, lambda=0, method="ML")[['results']][1:12,'MAE']
 
-	expect_equal(result, Hynd)
+	expect_equal(result, Hynd, tolerance=0.05)
 }
 )
 
@@ -47,6 +47,6 @@ test_that("CV 12, Growing-Window ETS", {
 					)
 	result <- cv.ts(a10, etsForecast, myControl, model="MMM", damped=TRUE)[['results']][1:12,'MAE']
 
-	expect_equal(result, Hynd)
+	expect_equal(result, Hynd, tolerance=0.05)
 }
 )

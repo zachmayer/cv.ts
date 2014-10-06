@@ -23,6 +23,6 @@ test_that("xreg", {
 	            226.415187927682, 225.361238437867, 227.374860412696, 238.611319458946,
 	            220.75462138854)
 
-	expect_equal(result, Answer)
+	expect_equal(result, Answer, tolerance=0.05)
 }
 )
