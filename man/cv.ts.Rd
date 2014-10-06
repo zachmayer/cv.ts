@@ -4,7 +4,7 @@
 \title{Function to cross-validate a time series.}
 \usage{
 cv.ts(x, FUN, tsControl = tseriesControl(), xreg = NULL, progress = TRUE,
-  ...)
+  packages = NULL, ...)
 }
 \description{
 Function to cross-validate a time series.
