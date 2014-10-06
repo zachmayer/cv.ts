@@ -25,7 +25,7 @@ test_that("Growing Window LM", {
 					)
 	result <- cv.ts(a10, lmForecast, myControl, lambda=0)[['results']][1:12,'MAE']
 
-	expect_that(result, equals(Hynd))
+	expect_equal(result, Hynd)
 }
 )
 
@@ -49,7 +49,7 @@ test_that("Fixed Window LM", {
 					)
 	result <- cv.ts(a10, lmForecast, myControl, lambda=0)[['results']][1:12,'MAE']
 
-	expect_that(result, equals(Hynd))
+	expect_equal(result, Hynd)
 }
 )
 
@@ -73,6 +73,6 @@ test_that("CV 12, Growing-Window LM", {
 					)
 	result <- cv.ts(a10, lmForecast, myControl, lambda=0)[['results']][1:12,'MAE']
 
-	expect_that(result, equals(Hynd))
+	expect_equal(result, Hynd)
 }
 )

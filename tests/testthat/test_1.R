@@ -23,6 +23,6 @@ test_that("1-step LM", {
 
 	result <- cv.ts(a10, lmForecast, myControl, lambda=0)[['results']][1,'MAE']
 
-	expect_that(result, equals(Hynd))
+	expect_equal(result, Hynd)
 }
 )
