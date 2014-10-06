@@ -11,6 +11,10 @@ Depends:
     forecast,
     caret,
     foreach
+Suggests:
+  fpp,
+  testthat
 Imports:
     plyr
-License: MIT
+License: MIT + file LICENSE
+

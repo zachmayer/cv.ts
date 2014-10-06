@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/zachmayer/cv.ts.png?branch=master)](https://travis-ci.org/zachmayer/cv.ts)
 Time Series Cross-Valiation
 ===
 
