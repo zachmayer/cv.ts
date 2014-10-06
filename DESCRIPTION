@@ -12,9 +12,8 @@ Depends:
     caret,
     foreach
 Suggests:
-  fpp,
-  testthat
+    fpp,
+    testthat
 Imports:
     plyr
 License: MIT + file LICENSE
-
