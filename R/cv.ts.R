@@ -42,14 +42,11 @@ tseriesControl <- function(stepSize=1, maxHorizon=1, minObs=12, fixedWindow=TRUE
 
 #' Function to cross-validate a time series.
 #' @export
-cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, ...) {
+cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, packages=NULL, ...) {
 
 	#Load required packages
 	stopifnot(is.ts(x))
 	stopifnot(is.data.frame(xreg) | is.matrix(xreg) | is.null(xreg))
-	library('forecast')
-	library('foreach')
-	library('plyr')
 
 	#Load parameters from the tsControl list
 	stepSize <- tsControl$stepSize
@@ -116,7 +113,7 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
 
 	#At each point in time, calculate 'maxHorizon' forecasts ahead
 	forecasts <- foreach(i=steps, .combine=combine, .multicombine=FALSE,
-                  .packages=c('forecast'), .export=c('testObject', 'tsSummary', 'tseriesControl')) %dopar% {
+                  .packages=c('forecast', 'caret', packages), .export=c('testObject', 'tsSummary', 'tseriesControl')) %dopar% {
 
 		if (is.null(xreg)) {
 			if (fixedWindow) {
@@ -177,7 +174,7 @@ cv.ts <- function(x, FUN, tsControl=tseriesControl(), xreg=NULL, progress=TRUE, 
 
 	#Accuracy at each horizon
 	out <- data.frame(
-					ldply(1:maxHorizon,
+					plyr::ldply(1:maxHorizon,
 						function(horizon) {
 							P <- forecasts[,horizon,drop=FALSE]
 							A <- na.omit(actuals[,horizon,drop=FALSE])

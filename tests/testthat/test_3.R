@@ -5,8 +5,7 @@
 
 #ARIMA Model, skip 12
 test_that("CV 12, Growing-Window ARIMA", {
-  data(a10)
-
+  library('fpp')
   #Define Answer <- Hyndman's new Arima Function
   Hynd <- c(0.530093131265591, 0.670045801021527, 0.675511405138484, 0.504526932858031,
             0.864255071077892, 0.583686693558371, 0.848232739738297, 0.914759546370232,
@@ -31,7 +30,7 @@ test_that("CV 12, Growing-Window ARIMA", {
 
 #ETS Model, skip 12
 test_that("CV 12, Growing-Window ETS", {
-  data(a10)
+  library('fpp')
 	#Define Answer
 	Hynd <- c(0.383842162984939, 0.613118892984361, 0.641529116111774, 0.65376999722495,
 	          0.896112617471054, 1.06816137460941, 0.868167871199789, 0.792827956506136,

@@ -8,7 +8,7 @@
 test_that("1-step LM", {
 
 	#Define Answer
-  data(a10)
+  library('fpp')
 	Hynd <- c(0.779154492257176)
 
 	#Cross-validate model
