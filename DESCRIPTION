@@ -1,7 +1,7 @@
 Package: cv.ts
 Type: Package
 Title: Cross-validation of time series models
-Version: 0.02
+Version: 0.0.0.90105
 Date: 2014-09-09
 Author: Zach Mayer
 Maintainer: Zach Mayer <zach.mayer@gmail.com>
