@@ -99,8 +99,8 @@ tbatsForecast <- function(x,h,...) {
 
 #' NNetar forecast wrapper
 #' @export
-nnetarForecast <- function(x, h, p=1, ...) {
-  fit <- forecast::nnetar(x, p=p, ...)
+nnetarForecast <- function(x, h, nn_p=1, ...) {
+  fit <- forecast::nnetar(x, p=nn_p, ...)
   forecast::forecast(fit, h=h, level=99)$mean
 }
 
